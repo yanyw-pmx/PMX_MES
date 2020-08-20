@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powermax.mes.mapper.DeviceMachineStateMapper">
+  <resultMap id="BaseResultMap" type="com.powermax.mes.model.DeviceMachineState">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="run_state" jdbcType="INTEGER" property="runState" />
+    <result column="lock_flag" jdbcType="BIT" property="lockFlag" />
+    <result column="auto_flag" jdbcType="BIT" property="autoFlag" />
+    <result column="total_stitch" jdbcType="BIGINT" property="totalStitch" />
+    <result column="total_trim" jdbcType="BIGINT" property="totalTrim" />
+    <result column="cur_stitch" jdbcType="BIGINT" property="curStitch" />
+    <result column="cur_trim" jdbcType="BIGINT" property="curTrim" />
+    <result column="total_run_rime" jdbcType="BIGINT" property="totalRunRime" />
+    <result column="total_idle_time" jdbcType="BIGINT" property="totalIdleTime" />
+    <result column="cur_run_time" jdbcType="BIGINT" property="curRunTime" />
+    <result column="cur_idle_time" jdbcType="BIGINT" property="curIdleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, run_state, lock_flag, auto_flag, total_stitch, total_trim, cur_stitch, 
+    cur_trim, total_run_rime, total_idle_time, cur_run_time, cur_idle_time, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.powermax.mes.model.DeviceMachineStateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from device_machine_state
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device_machine_state
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from device_machine_state
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.powermax.mes.model.DeviceMachineStateExample">
+    delete from device_machine_state
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.powermax.mes.model.DeviceMachineState">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into device_machine_state (user_id, run_state, lock_flag, 
+      auto_flag, total_stitch, total_trim, 
+      cur_stitch, cur_trim, total_run_rime, 
+      total_idle_time, cur_run_time, cur_idle_time, 
+      create_time)
+    values (#{userId,jdbcType=BIGINT}, #{runState,jdbcType=INTEGER}, #{lockFlag,jdbcType=BIT}, 
+      #{autoFlag,jdbcType=BIT}, #{totalStitch,jdbcType=BIGINT}, #{totalTrim,jdbcType=BIGINT}, 
+      #{curStitch,jdbcType=BIGINT}, #{curTrim,jdbcType=BIGINT}, #{totalRunRime,jdbcType=BIGINT}, 
+      #{totalIdleTime,jdbcType=BIGINT}, #{curRunTime,jdbcType=BIGINT}, #{curIdleTime,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.powermax.mes.model.DeviceMachineState">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into device_machine_state
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="runState != null">
+        run_state,
+      </if>
+      <if test="lockFlag != null">
+        lock_flag,
+      </if>
+      <if test="autoFlag != null">
+        auto_flag,
+      </if>
+      <if test="totalStitch != null">
+        total_stitch,
+      </if>
+      <if test="totalTrim != null">
+        total_trim,
+      </if>
+      <if test="curStitch != null">
+        cur_stitch,
+      </if>
+      <if test="curTrim != null">
+        cur_trim,
+      </if>
+      <if test="totalRunRime != null">
+        total_run_rime,
+      </if>
+      <if test="totalIdleTime != null">
+        total_idle_time,
+      </if>
+      <if test="curRunTime != null">
+        cur_run_time,
+      </if>
+      <if test="curIdleTime != null">
+        cur_idle_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="runState != null">
+        #{runState,jdbcType=INTEGER},
+      </if>
+      <if test="lockFlag != null">
+        #{lockFlag,jdbcType=BIT},
+      </if>
+      <if test="autoFlag != null">
+        #{autoFlag,jdbcType=BIT},
+      </if>
+      <if test="totalStitch != null">
+        #{totalStitch,jdbcType=BIGINT},
+      </if>
+      <if test="totalTrim != null">
+        #{totalTrim,jdbcType=BIGINT},
+      </if>
+      <if test="curStitch != null">
+        #{curStitch,jdbcType=BIGINT},
+      </if>
+      <if test="curTrim != null">
+        #{curTrim,jdbcType=BIGINT},
+      </if>
+      <if test="totalRunRime != null">
+        #{totalRunRime,jdbcType=BIGINT},
+      </if>
+      <if test="totalIdleTime != null">
+        #{totalIdleTime,jdbcType=BIGINT},
+      </if>
+      <if test="curRunTime != null">
+        #{curRunTime,jdbcType=BIGINT},
+      </if>
+      <if test="curIdleTime != null">
+        #{curIdleTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.powermax.mes.model.DeviceMachineStateExample" resultType="java.lang.Long">
+    select count(*) from device_machine_state
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update device_machine_state
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.runState != null">
+        run_state = #{record.runState,jdbcType=INTEGER},
+      </if>
+      <if test="record.lockFlag != null">
+        lock_flag = #{record.lockFlag,jdbcType=BIT},
+      </if>
+      <if test="record.autoFlag != null">
+        auto_flag = #{record.autoFlag,jdbcType=BIT},
+      </if>
+      <if test="record.totalStitch != null">
+        total_stitch = #{record.totalStitch,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalTrim != null">
+        total_trim = #{record.totalTrim,jdbcType=BIGINT},
+      </if>
+      <if test="record.curStitch != null">
+        cur_stitch = #{record.curStitch,jdbcType=BIGINT},
+      </if>
+      <if test="record.curTrim != null">
+        cur_trim = #{record.curTrim,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalRunRime != null">
+        total_run_rime = #{record.totalRunRime,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalIdleTime != null">
+        total_idle_time = #{record.totalIdleTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.curRunTime != null">
+        cur_run_time = #{record.curRunTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.curIdleTime != null">
+        cur_idle_time = #{record.curIdleTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update device_machine_state
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      run_state = #{record.runState,jdbcType=INTEGER},
+      lock_flag = #{record.lockFlag,jdbcType=BIT},
+      auto_flag = #{record.autoFlag,jdbcType=BIT},
+      total_stitch = #{record.totalStitch,jdbcType=BIGINT},
+      total_trim = #{record.totalTrim,jdbcType=BIGINT},
+      cur_stitch = #{record.curStitch,jdbcType=BIGINT},
+      cur_trim = #{record.curTrim,jdbcType=BIGINT},
+      total_run_rime = #{record.totalRunRime,jdbcType=BIGINT},
+      total_idle_time = #{record.totalIdleTime,jdbcType=BIGINT},
+      cur_run_time = #{record.curRunTime,jdbcType=BIGINT},
+      cur_idle_time = #{record.curIdleTime,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.powermax.mes.model.DeviceMachineState">
+    update device_machine_state
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="runState != null">
+        run_state = #{runState,jdbcType=INTEGER},
+      </if>
+      <if test="lockFlag != null">
+        lock_flag = #{lockFlag,jdbcType=BIT},
+      </if>
+      <if test="autoFlag != null">
+        auto_flag = #{autoFlag,jdbcType=BIT},
+      </if>
+      <if test="totalStitch != null">
+        total_stitch = #{totalStitch,jdbcType=BIGINT},
+      </if>
+      <if test="totalTrim != null">
+        total_trim = #{totalTrim,jdbcType=BIGINT},
+      </if>
+      <if test="curStitch != null">
+        cur_stitch = #{curStitch,jdbcType=BIGINT},
+      </if>
+      <if test="curTrim != null">
+        cur_trim = #{curTrim,jdbcType=BIGINT},
+      </if>
+      <if test="totalRunRime != null">
+        total_run_rime = #{totalRunRime,jdbcType=BIGINT},
+      </if>
+      <if test="totalIdleTime != null">
+        total_idle_time = #{totalIdleTime,jdbcType=BIGINT},
+      </if>
+      <if test="curRunTime != null">
+        cur_run_time = #{curRunTime,jdbcType=BIGINT},
+      </if>
+      <if test="curIdleTime != null">
+        cur_idle_time = #{curIdleTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.powermax.mes.model.DeviceMachineState">
+    update device_machine_state
+    set user_id = #{userId,jdbcType=BIGINT},
+      run_state = #{runState,jdbcType=INTEGER},
+      lock_flag = #{lockFlag,jdbcType=BIT},
+      auto_flag = #{autoFlag,jdbcType=BIT},
+      total_stitch = #{totalStitch,jdbcType=BIGINT},
+      total_trim = #{totalTrim,jdbcType=BIGINT},
+      cur_stitch = #{curStitch,jdbcType=BIGINT},
+      cur_trim = #{curTrim,jdbcType=BIGINT},
+      total_run_rime = #{totalRunRime,jdbcType=BIGINT},
+      total_idle_time = #{totalIdleTime,jdbcType=BIGINT},
+      cur_run_time = #{curRunTime,jdbcType=BIGINT},
+      cur_idle_time = #{curIdleTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

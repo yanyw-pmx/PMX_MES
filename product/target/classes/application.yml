@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/mes?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 12345678
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+
+  security:
+    user:
+      name: user
+      password: 123
+
+jwt:
+  secret: secret
+  expiration: 7200000
+  token: Authorization
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
+

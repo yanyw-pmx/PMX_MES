@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powermax.mes.mapper.ProduceProcessPieceMapper">
+  <resultMap id="BaseResultMap" type="com.powermax.mes.model.ProduceProcessPiece">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="worker_id" jdbcType="BIGINT" property="workerId" />
+    <result column="dispatch_id" jdbcType="BIGINT" property="dispatchId" />
+    <result column="process_id" jdbcType="BIGINT" property="processId" />
+    <result column="machine_id" jdbcType="BIGINT" property="machineId" />
+    <result column="cycle_time" jdbcType="INTEGER" property="cycleTime" />
+    <result column="value_time" jdbcType="INTEGER" property="valueTime" />
+    <result column="cycle_stitch" jdbcType="INTEGER" property="cycleStitch" />
+    <result column="cycle_trim" jdbcType="INTEGER" property="cycleTrim" />
+    <result column="done_cnt" jdbcType="INTEGER" property="doneCnt" />
+    <result column="over_time" jdbcType="TIMESTAMP" property="overTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, worker_id, dispatch_id, process_id, machine_id, cycle_time, value_time, cycle_stitch, 
+    cycle_trim, done_cnt, over_time
+  </sql>
+  <select id="selectByExample" parameterType="com.powermax.mes.model.ProduceProcessPieceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from produce_process_piece
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from produce_process_piece
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from produce_process_piece
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.powermax.mes.model.ProduceProcessPieceExample">
+    delete from produce_process_piece
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.powermax.mes.model.ProduceProcessPiece">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_process_piece (worker_id, dispatch_id, process_id, 
+      machine_id, cycle_time, value_time, 
+      cycle_stitch, cycle_trim, done_cnt, 
+      over_time)
+    values (#{workerId,jdbcType=BIGINT}, #{dispatchId,jdbcType=BIGINT}, #{processId,jdbcType=BIGINT}, 
+      #{machineId,jdbcType=BIGINT}, #{cycleTime,jdbcType=INTEGER}, #{valueTime,jdbcType=INTEGER}, 
+      #{cycleStitch,jdbcType=INTEGER}, #{cycleTrim,jdbcType=INTEGER}, #{doneCnt,jdbcType=INTEGER}, 
+      #{overTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.powermax.mes.model.ProduceProcessPiece">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_process_piece
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workerId != null">
+        worker_id,
+      </if>
+      <if test="dispatchId != null">
+        dispatch_id,
+      </if>
+      <if test="processId != null">
+        process_id,
+      </if>
+      <if test="machineId != null">
+        machine_id,
+      </if>
+      <if test="cycleTime != null">
+        cycle_time,
+      </if>
+      <if test="valueTime != null">
+        value_time,
+      </if>
+      <if test="cycleStitch != null">
+        cycle_stitch,
+      </if>
+      <if test="cycleTrim != null">
+        cycle_trim,
+      </if>
+      <if test="doneCnt != null">
+        done_cnt,
+      </if>
+      <if test="overTime != null">
+        over_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workerId != null">
+        #{workerId,jdbcType=BIGINT},
+      </if>
+      <if test="dispatchId != null">
+        #{dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="processId != null">
+        #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null">
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="cycleTime != null">
+        #{cycleTime,jdbcType=INTEGER},
+      </if>
+      <if test="valueTime != null">
+        #{valueTime,jdbcType=INTEGER},
+      </if>
+      <if test="cycleStitch != null">
+        #{cycleStitch,jdbcType=INTEGER},
+      </if>
+      <if test="cycleTrim != null">
+        #{cycleTrim,jdbcType=INTEGER},
+      </if>
+      <if test="doneCnt != null">
+        #{doneCnt,jdbcType=INTEGER},
+      </if>
+      <if test="overTime != null">
+        #{overTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.powermax.mes.model.ProduceProcessPieceExample" resultType="java.lang.Long">
+    select count(*) from produce_process_piece
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update produce_process_piece
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.workerId != null">
+        worker_id = #{record.workerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dispatchId != null">
+        dispatch_id = #{record.dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.processId != null">
+        process_id = #{record.processId,jdbcType=BIGINT},
+      </if>
+      <if test="record.machineId != null">
+        machine_id = #{record.machineId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cycleTime != null">
+        cycle_time = #{record.cycleTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.valueTime != null">
+        value_time = #{record.valueTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleStitch != null">
+        cycle_stitch = #{record.cycleStitch,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleTrim != null">
+        cycle_trim = #{record.cycleTrim,jdbcType=INTEGER},
+      </if>
+      <if test="record.doneCnt != null">
+        done_cnt = #{record.doneCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.overTime != null">
+        over_time = #{record.overTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update produce_process_piece
+    set id = #{record.id,jdbcType=BIGINT},
+      worker_id = #{record.workerId,jdbcType=BIGINT},
+      dispatch_id = #{record.dispatchId,jdbcType=BIGINT},
+      process_id = #{record.processId,jdbcType=BIGINT},
+      machine_id = #{record.machineId,jdbcType=BIGINT},
+      cycle_time = #{record.cycleTime,jdbcType=INTEGER},
+      value_time = #{record.valueTime,jdbcType=INTEGER},
+      cycle_stitch = #{record.cycleStitch,jdbcType=INTEGER},
+      cycle_trim = #{record.cycleTrim,jdbcType=INTEGER},
+      done_cnt = #{record.doneCnt,jdbcType=INTEGER},
+      over_time = #{record.overTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.powermax.mes.model.ProduceProcessPiece">
+    update produce_process_piece
+    <set>
+      <if test="workerId != null">
+        worker_id = #{workerId,jdbcType=BIGINT},
+      </if>
+      <if test="dispatchId != null">
+        dispatch_id = #{dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="processId != null">
+        process_id = #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null">
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="cycleTime != null">
+        cycle_time = #{cycleTime,jdbcType=INTEGER},
+      </if>
+      <if test="valueTime != null">
+        value_time = #{valueTime,jdbcType=INTEGER},
+      </if>
+      <if test="cycleStitch != null">
+        cycle_stitch = #{cycleStitch,jdbcType=INTEGER},
+      </if>
+      <if test="cycleTrim != null">
+        cycle_trim = #{cycleTrim,jdbcType=INTEGER},
+      </if>
+      <if test="doneCnt != null">
+        done_cnt = #{doneCnt,jdbcType=INTEGER},
+      </if>
+      <if test="overTime != null">
+        over_time = #{overTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.powermax.mes.model.ProduceProcessPiece">
+    update produce_process_piece
+    set worker_id = #{workerId,jdbcType=BIGINT},
+      dispatch_id = #{dispatchId,jdbcType=BIGINT},
+      process_id = #{processId,jdbcType=BIGINT},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      cycle_time = #{cycleTime,jdbcType=INTEGER},
+      value_time = #{valueTime,jdbcType=INTEGER},
+      cycle_stitch = #{cycleStitch,jdbcType=INTEGER},
+      cycle_trim = #{cycleTrim,jdbcType=INTEGER},
+      done_cnt = #{doneCnt,jdbcType=INTEGER},
+      over_time = #{overTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

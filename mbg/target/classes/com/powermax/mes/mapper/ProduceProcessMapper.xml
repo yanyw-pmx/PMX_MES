@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powermax.mes.mapper.ProduceProcessMapper">
+  <resultMap id="BaseResultMap" type="com.powermax.mes.model.ProduceProcess">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="process_id" jdbcType="BIGINT" property="processId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="des" jdbcType="VARCHAR" property="des" />
+    <result column="cycle_time" jdbcType="INTEGER" property="cycleTime" />
+    <result column="cycle_stitch" jdbcType="INTEGER" property="cycleStitch" />
+    <result column="cycle_trim" jdbcType="INTEGER" property="cycleTrim" />
+    <result column="work_price" jdbcType="DECIMAL" property="workPrice" />
+    <result column="machine_id" jdbcType="INTEGER" property="machineId" />
+    <result column="process_type" jdbcType="INTEGER" property="processType" />
+    <result column="sewing_length" jdbcType="INTEGER" property="sewingLength" />
+    <result column="sewing_time" jdbcType="INTEGER" property="sewingTime" />
+    <result column="parts_name" jdbcType="VARCHAR" property="partsName" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="picture_url" jdbcType="VARCHAR" property="pictureUrl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, process_id, product_id, des, cycle_time, cycle_stitch, cycle_trim, work_price, 
+    machine_id, process_type, sewing_length, sewing_time, parts_name, remarks, video_url, 
+    picture_url
+  </sql>
+  <select id="selectByExample" parameterType="com.powermax.mes.model.ProduceProcessExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from produce_process
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from produce_process
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from produce_process
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.powermax.mes.model.ProduceProcessExample">
+    delete from produce_process
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.powermax.mes.model.ProduceProcess">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_process (process_id, product_id, des, 
+      cycle_time, cycle_stitch, cycle_trim, 
+      work_price, machine_id, process_type, 
+      sewing_length, sewing_time, parts_name, 
+      remarks, video_url, picture_url
+      )
+    values (#{processId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{des,jdbcType=VARCHAR}, 
+      #{cycleTime,jdbcType=INTEGER}, #{cycleStitch,jdbcType=INTEGER}, #{cycleTrim,jdbcType=INTEGER}, 
+      #{workPrice,jdbcType=DECIMAL}, #{machineId,jdbcType=INTEGER}, #{processType,jdbcType=INTEGER}, 
+      #{sewingLength,jdbcType=INTEGER}, #{sewingTime,jdbcType=INTEGER}, #{partsName,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, #{pictureUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.powermax.mes.model.ProduceProcess">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_process
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="processId != null">
+        process_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+      <if test="cycleTime != null">
+        cycle_time,
+      </if>
+      <if test="cycleStitch != null">
+        cycle_stitch,
+      </if>
+      <if test="cycleTrim != null">
+        cycle_trim,
+      </if>
+      <if test="workPrice != null">
+        work_price,
+      </if>
+      <if test="machineId != null">
+        machine_id,
+      </if>
+      <if test="processType != null">
+        process_type,
+      </if>
+      <if test="sewingLength != null">
+        sewing_length,
+      </if>
+      <if test="sewingTime != null">
+        sewing_time,
+      </if>
+      <if test="partsName != null">
+        parts_name,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="videoUrl != null">
+        video_url,
+      </if>
+      <if test="pictureUrl != null">
+        picture_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="processId != null">
+        #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleTime != null">
+        #{cycleTime,jdbcType=INTEGER},
+      </if>
+      <if test="cycleStitch != null">
+        #{cycleStitch,jdbcType=INTEGER},
+      </if>
+      <if test="cycleTrim != null">
+        #{cycleTrim,jdbcType=INTEGER},
+      </if>
+      <if test="workPrice != null">
+        #{workPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="machineId != null">
+        #{machineId,jdbcType=INTEGER},
+      </if>
+      <if test="processType != null">
+        #{processType,jdbcType=INTEGER},
+      </if>
+      <if test="sewingLength != null">
+        #{sewingLength,jdbcType=INTEGER},
+      </if>
+      <if test="sewingTime != null">
+        #{sewingTime,jdbcType=INTEGER},
+      </if>
+      <if test="partsName != null">
+        #{partsName,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null">
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.powermax.mes.model.ProduceProcessExample" resultType="java.lang.Long">
+    select count(*) from produce_process
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update produce_process
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.processId != null">
+        process_id = #{record.processId,jdbcType=BIGINT},
+      </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=BIGINT},
+      </if>
+      <if test="record.des != null">
+        des = #{record.des,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleTime != null">
+        cycle_time = #{record.cycleTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleStitch != null">
+        cycle_stitch = #{record.cycleStitch,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleTrim != null">
+        cycle_trim = #{record.cycleTrim,jdbcType=INTEGER},
+      </if>
+      <if test="record.workPrice != null">
+        work_price = #{record.workPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.machineId != null">
+        machine_id = #{record.machineId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processType != null">
+        process_type = #{record.processType,jdbcType=INTEGER},
+      </if>
+      <if test="record.sewingLength != null">
+        sewing_length = #{record.sewingLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.sewingTime != null">
+        sewing_time = #{record.sewingTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.partsName != null">
+        parts_name = #{record.partsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoUrl != null">
+        video_url = #{record.videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureUrl != null">
+        picture_url = #{record.pictureUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update produce_process
+    set id = #{record.id,jdbcType=BIGINT},
+      process_id = #{record.processId,jdbcType=BIGINT},
+      product_id = #{record.productId,jdbcType=BIGINT},
+      des = #{record.des,jdbcType=VARCHAR},
+      cycle_time = #{record.cycleTime,jdbcType=INTEGER},
+      cycle_stitch = #{record.cycleStitch,jdbcType=INTEGER},
+      cycle_trim = #{record.cycleTrim,jdbcType=INTEGER},
+      work_price = #{record.workPrice,jdbcType=DECIMAL},
+      machine_id = #{record.machineId,jdbcType=INTEGER},
+      process_type = #{record.processType,jdbcType=INTEGER},
+      sewing_length = #{record.sewingLength,jdbcType=INTEGER},
+      sewing_time = #{record.sewingTime,jdbcType=INTEGER},
+      parts_name = #{record.partsName,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      video_url = #{record.videoUrl,jdbcType=VARCHAR},
+      picture_url = #{record.pictureUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.powermax.mes.model.ProduceProcess">
+    update produce_process
+    <set>
+      <if test="processId != null">
+        process_id = #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="des != null">
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleTime != null">
+        cycle_time = #{cycleTime,jdbcType=INTEGER},
+      </if>
+      <if test="cycleStitch != null">
+        cycle_stitch = #{cycleStitch,jdbcType=INTEGER},
+      </if>
+      <if test="cycleTrim != null">
+        cycle_trim = #{cycleTrim,jdbcType=INTEGER},
+      </if>
+      <if test="workPrice != null">
+        work_price = #{workPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="machineId != null">
+        machine_id = #{machineId,jdbcType=INTEGER},
+      </if>
+      <if test="processType != null">
+        process_type = #{processType,jdbcType=INTEGER},
+      </if>
+      <if test="sewingLength != null">
+        sewing_length = #{sewingLength,jdbcType=INTEGER},
+      </if>
+      <if test="sewingTime != null">
+        sewing_time = #{sewingTime,jdbcType=INTEGER},
+      </if>
+      <if test="partsName != null">
+        parts_name = #{partsName,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null">
+        picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.powermax.mes.model.ProduceProcess">
+    update produce_process
+    set process_id = #{processId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      des = #{des,jdbcType=VARCHAR},
+      cycle_time = #{cycleTime,jdbcType=INTEGER},
+      cycle_stitch = #{cycleStitch,jdbcType=INTEGER},
+      cycle_trim = #{cycleTrim,jdbcType=INTEGER},
+      work_price = #{workPrice,jdbcType=DECIMAL},
+      machine_id = #{machineId,jdbcType=INTEGER},
+      process_type = #{processType,jdbcType=INTEGER},
+      sewing_length = #{sewingLength,jdbcType=INTEGER},
+      sewing_time = #{sewingTime,jdbcType=INTEGER},
+      parts_name = #{partsName,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      picture_url = #{pictureUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

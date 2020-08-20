@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powermax.mes.mapper.SystemRfidRecorderMapper">
+  <resultMap id="BaseResultMap" type="com.powermax.mes.model.SystemRfidRecorder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="machine_id" jdbcType="BIGINT" property="machineId" />
+    <result column="rfid_card_id" jdbcType="BIGINT" property="rfidCardId" />
+    <result column="login_state" jdbcType="INTEGER" property="loginState" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, machine_id, rfid_card_id, login_state, creat_time
+  </sql>
+  <select id="selectByExample" parameterType="com.powermax.mes.model.SystemRfidRecorderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_rfid_recorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_rfid_recorder
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from system_rfid_recorder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.powermax.mes.model.SystemRfidRecorderExample">
+    delete from system_rfid_recorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.powermax.mes.model.SystemRfidRecorder">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_rfid_recorder (machine_id, rfid_card_id, login_state, 
+      creat_time)
+    values (#{machineId,jdbcType=BIGINT}, #{rfidCardId,jdbcType=BIGINT}, #{loginState,jdbcType=INTEGER}, 
+      #{creatTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.powermax.mes.model.SystemRfidRecorder">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_rfid_recorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="machineId != null">
+        machine_id,
+      </if>
+      <if test="rfidCardId != null">
+        rfid_card_id,
+      </if>
+      <if test="loginState != null">
+        login_state,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="machineId != null">
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="rfidCardId != null">
+        #{rfidCardId,jdbcType=BIGINT},
+      </if>
+      <if test="loginState != null">
+        #{loginState,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.powermax.mes.model.SystemRfidRecorderExample" resultType="java.lang.Long">
+    select count(*) from system_rfid_recorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_rfid_recorder
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.machineId != null">
+        machine_id = #{record.machineId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rfidCardId != null">
+        rfid_card_id = #{record.rfidCardId,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginState != null">
+        login_state = #{record.loginState,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatTime != null">
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_rfid_recorder
+    set id = #{record.id,jdbcType=BIGINT},
+      machine_id = #{record.machineId,jdbcType=BIGINT},
+      rfid_card_id = #{record.rfidCardId,jdbcType=BIGINT},
+      login_state = #{record.loginState,jdbcType=INTEGER},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.powermax.mes.model.SystemRfidRecorder">
+    update system_rfid_recorder
+    <set>
+      <if test="machineId != null">
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="rfidCardId != null">
+        rfid_card_id = #{rfidCardId,jdbcType=BIGINT},
+      </if>
+      <if test="loginState != null">
+        login_state = #{loginState,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.powermax.mes.model.SystemRfidRecorder">
+    update system_rfid_recorder
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      rfid_card_id = #{rfidCardId,jdbcType=BIGINT},
+      login_state = #{loginState,jdbcType=INTEGER},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

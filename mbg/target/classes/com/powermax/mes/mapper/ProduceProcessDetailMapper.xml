@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powermax.mes.mapper.ProduceProcessDetailMapper">
+  <resultMap id="BaseResultMap" type="com.powermax.mes.model.ProduceProcessDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="dispatch_id" jdbcType="BIGINT" property="dispatchId" />
+    <result column="process_id" jdbcType="BIGINT" property="processId" />
+    <result column="avg_ct" jdbcType="INTEGER" property="avgCt" />
+    <result column="done_cnt" jdbcType="INTEGER" property="doneCnt" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, dispatch_id, process_id, avg_ct, done_cnt, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.powermax.mes.model.ProduceProcessDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from produce_process_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from produce_process_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from produce_process_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.powermax.mes.model.ProduceProcessDetailExample">
+    delete from produce_process_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.powermax.mes.model.ProduceProcessDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_process_detail (dispatch_id, process_id, avg_ct, 
+      done_cnt, create_time)
+    values (#{dispatchId,jdbcType=BIGINT}, #{processId,jdbcType=BIGINT}, #{avgCt,jdbcType=INTEGER}, 
+      #{doneCnt,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.powermax.mes.model.ProduceProcessDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_process_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dispatchId != null">
+        dispatch_id,
+      </if>
+      <if test="processId != null">
+        process_id,
+      </if>
+      <if test="avgCt != null">
+        avg_ct,
+      </if>
+      <if test="doneCnt != null">
+        done_cnt,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dispatchId != null">
+        #{dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="processId != null">
+        #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="avgCt != null">
+        #{avgCt,jdbcType=INTEGER},
+      </if>
+      <if test="doneCnt != null">
+        #{doneCnt,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.powermax.mes.model.ProduceProcessDetailExample" resultType="java.lang.Long">
+    select count(*) from produce_process_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update produce_process_detail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.dispatchId != null">
+        dispatch_id = #{record.dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.processId != null">
+        process_id = #{record.processId,jdbcType=BIGINT},
+      </if>
+      <if test="record.avgCt != null">
+        avg_ct = #{record.avgCt,jdbcType=INTEGER},
+      </if>
+      <if test="record.doneCnt != null">
+        done_cnt = #{record.doneCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update produce_process_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      dispatch_id = #{record.dispatchId,jdbcType=BIGINT},
+      process_id = #{record.processId,jdbcType=BIGINT},
+      avg_ct = #{record.avgCt,jdbcType=INTEGER},
+      done_cnt = #{record.doneCnt,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.powermax.mes.model.ProduceProcessDetail">
+    update produce_process_detail
+    <set>
+      <if test="dispatchId != null">
+        dispatch_id = #{dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="processId != null">
+        process_id = #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="avgCt != null">
+        avg_ct = #{avgCt,jdbcType=INTEGER},
+      </if>
+      <if test="doneCnt != null">
+        done_cnt = #{doneCnt,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.powermax.mes.model.ProduceProcessDetail">
+    update produce_process_detail
+    set dispatch_id = #{dispatchId,jdbcType=BIGINT},
+      process_id = #{processId,jdbcType=BIGINT},
+      avg_ct = #{avgCt,jdbcType=INTEGER},
+      done_cnt = #{doneCnt,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
